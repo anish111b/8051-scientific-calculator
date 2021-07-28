@@ -15,10 +15,13 @@ char get_key(void);
 //Pin description
 /*
 P2 is data bus
-P3.7 is RS
-P3.6 is E
+P0.7 is RS
+P0.6 is E
 P1.0 to P1.3 are keypad row outputs
 P1.4 to P1.7 are keypad column inputs
+P3.0 to P3.3 are keypad row outputs
+P3.4 to P3.7 are keypad column inputs
+
 */
 //********************
 // Define Pins
@@ -34,20 +37,20 @@ sbit C3   = P1^6;     //Column3
 sbit C4   = P1^7;     //Column4
 
 
-sbit RowAA = P0^0;     //RowA
-sbit RowBB = P0^1;     //RowB
-sbit RowCC = P0^2;     //RowC
-sbit RowDD = P0^3;     //RowD
+sbit RowAA = P3^0;     //RowA
+sbit RowBB = P3^1;     //RowB
+sbit RowCC = P3^2;     //RowC
+sbit RowDD = P3^3;     //RowD
 
-sbit C11   = P0^4;     //Column1
-sbit C22   = P0^5;     //Column2
-sbit C33   = P0^6;     //Column3
-sbit C44   = P0^7;     //Column4
+sbit C11   = P3^4;     //Column1
+sbit C22   = P3^5;     //Column2
+sbit C33   = P3^6;     //Column3
+sbit C44   = P3^7;     //Column4
 
 
 
-sbit E    = P3^6;     //E pin for LCD
-sbit RS   = P3^7;     //RS pin for LCD
+sbit E    = P0^6;     //E pin for LCD
+sbit RS   = P0^7;     //RS pin for LCD
 
 // ***********************************************************
 // Main program
@@ -59,7 +62,7 @@ int main(void)
    cct_init();              // Make input and output pins as required
    lcdinit();               // Initilize LCD
 
-   writecmd(0x95);
+   writecmd(0xDC);
    writedata('T');                                 //write
    writedata('E');                                 //write
    writedata('S');                                 //write           
@@ -76,10 +79,10 @@ int main(void)
 
 void cct_init(void)
 {
-	P0 = 0xf0;   // used
+	P0 = 0x00;   // used for RS and E
 	P1 = 0xf0;   //used for generating outputs and taking inputs from Keypad
 	P2 = 0x00;   //used as data port for LCD
-	P3 = 0x00;   //used for RS and E   
+	P3 = 0xf0;   // used for generating outputs and taking inputs from Keypad
 }
 
 void delay(int a)
